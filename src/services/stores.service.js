@@ -2,10 +2,11 @@
 import {BaseError} from "../../config/error";
 import {status} from "../../config/response.status.js";
 */
-import {storeAddResponseDTO, missionAddResponseDTO} from "../dtos/stores.dto.js"
-import {getRegionStore, addStore, addMission, getStoreMission} from "../models/stores.dao.js"
+import {storeAddResponseDTO, missionAddResponseDTO} from "../dtos/stores.dto.js";
+import {addStore, addReview, addMission} from "../models/stores.dao.js";
+import {getRegionStore, , getStoreMission} from "../models/stores.dao.js"
 
-//                              req.body
+//1                             req.body
 export const joinStore = async (body) => {
     const joinStoreData = await addStore({//가게 추가 >dao
         'region_id': body.region_id,
@@ -22,7 +23,24 @@ export const joinStore = async (body) => {
     return transResult;
     //dto를 리턴 response> result부분이 됨
 }
+//2
+export const joinReview = async(body) => {
+    const joinReviewData = await addReview({
+        "user_id": body.user_id,
+		"store_id": body.store_id,
+        "mission_id": body.mission_id,
+        "star": body.star,
+        "body": body.body,
+        "review_date": body.review_data
+    });
+    
+    if(joinReviewData == -1){
+        throw new BaseError(status.)
+    }
 
+    
+}
+//3
 export const joinMission = async(body) => {
     const joinMissionData = await addMission({
         'store_id': body.store_id,
@@ -37,4 +55,4 @@ export const joinMission = async(body) => {
     
     return transResult;
 }
-
+//4

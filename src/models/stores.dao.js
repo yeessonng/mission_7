@@ -34,6 +34,25 @@ export const getRegionStore = async(storeId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 }
+//------------------------------------------------------
+//가게에 리뷰 추가
+export const addReview = async(data) => {
+    try{
+        const conn = await pool.getConnection();
+
+        const [check] = await pool.query(check)
+
+        if(check[0].isExistStore){//
+            conn.release();
+            return -1;
+        }
+
+        //const result = await pool.query(insertReviewSql, )
+        
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
 
 //------------------------------------------------------
 //가게에 미션 추가
@@ -47,7 +66,7 @@ export const addMission = async(data) => {
 
         return result[0].insertId; //미션 id리턴
     }catch(err){
-        throw new BaseError(status.PARAMETER_IS_WRONG)
+        throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 
 }
@@ -65,3 +84,4 @@ export const getStoreMission = async(missionId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 }
+//------------------------------------------------------
