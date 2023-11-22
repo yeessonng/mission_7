@@ -1,10 +1,8 @@
-/*
-import {BaseError} from "../../config/error";
+import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
-*/
-import {storeAddResponseDTO, missionAddResponseDTO} from "../dtos/stores.dto.js";
-import {addStore, addReview, addMission} from "../models/stores.dao.js";
-import {getRegionStore, , getStoreMission} from "../models/stores.dao.js"
+
+import {storeAddResponseDTO, missionAddResponseDTO, patchMissionResponseDTO} from "../dtos/stores.dto.js"
+import {getRegionStore, addStore, addMission, getStoreMission, confirmMission, getResultStoreMission, patchMissionChallenge} from "../models/stores.dao.js"
 
 //1                             req.body
 export const joinStore = async (body) => {
@@ -24,6 +22,7 @@ export const joinStore = async (body) => {
     //dto를 리턴 response> result부분이 됨
 }
 //2
+/*
 export const joinReview = async(body) => {
     const joinReviewData = await addReview({
         "user_id": body.user_id,
@@ -40,6 +39,7 @@ export const joinReview = async(body) => {
 
     
 }
+*/
 //3
 export const joinMission = async(body) => {
     const joinMissionData = await addMission({
@@ -55,4 +55,23 @@ export const joinMission = async(body) => {
     
     return transResult;
 }
+
 //4
+export const patchMission = async(body) => {
+    const confirm = await confirmMission(body.id); //진행중인 미션인지 check한다.
+
+    if(confirm == -1){//이미 진행중인 미션
+        throw new BaseError(status.MISSION_ALREADY_CHANLLENGE);
+    }else{
+        //complete > 진행중
+        await patchMissionChallenge(body);
+
+        //response할 값 만들기
+        const result = await getResultStoreMission(body.id);
+        
+        //dto로 만들자
+        const transResult = patchMissionResponseDTO(result);
+        console.log(transResult);
+        return transResult;
+    }
+}
