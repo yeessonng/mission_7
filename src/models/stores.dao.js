@@ -2,7 +2,7 @@ import {pool} from "../../config/db.config.js";
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql} from "./stores.sql.js";
+import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql} from "./stores.sql.js";
 
 //1. 특정 지역에 가게 추가
 //store 데이터 삽입
@@ -35,14 +35,14 @@ export const getRegionStore = async(storeId) => {
     }
 }
 //------------------------------------------------------
-//가게에 리뷰 추가
+//2. 가게에 리뷰 추가
 export const addReview = async(data) => {
     try{
         const conn = await pool.getConnection();
 
-        const [check] = await pool.query(check)
+        const [checkStore] = await pool.query(checkStoreSql, data.store_id);
 
-        if(check[0].isExistStore){//
+        if(checkStore[0].isExistStore){//
             conn.release();
             return -1;
         }
@@ -84,9 +84,6 @@ export const getStoreMission = async(missionId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 }
-<<<<<<< HEAD
-//------------------------------------------------------
-=======
 
 //------------------------------------------------------
 //4. 미션 도전
@@ -131,4 +128,3 @@ export const getResultStoreMission = async(missionId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 }
->>>>>>> feature/4

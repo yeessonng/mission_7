@@ -5,6 +5,7 @@ export const getRegionStoreSql = "SELECT store.name as storeName, region.name as
 "WHERE store.id = ?;";
 
 //2
+export const checkStoreSql = "SELECT EXISTS(SELECT 1 FROM store WHERE store.id = ?) as isExistStore;";
 
 //3
 export const insertMissionSql = "INSERT INTO mission (store_id, body, term, reward) VALUES (?, ?, ?, ?);";

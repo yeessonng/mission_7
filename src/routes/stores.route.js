@@ -1,10 +1,6 @@
 import express from "express";
 import asyncHandler from 'express-async-handler';
-<<<<<<< HEAD
-import {storesAdd, missionAdd, reviewAdd} from "../controllers/stores.controller.js";
-=======
-import {storesAdd, missionAdd, missionChallenge} from "../controllers/stores.controller.js";
->>>>>>> feature/4
+import {storesAdd, reviewAdd, missionAdd, missionChallenge} from "../controllers/stores.controller.js";
 
 export const storesRouter = express.Router();
 

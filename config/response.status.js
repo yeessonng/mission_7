@@ -28,6 +28,9 @@ export const status = {
     //article err
     ARTICLE_NOT_FOUND: {status: StatusCodes.NOT_FOUND, "isSuccess": false, "code": "ARTICLE4001", "message": "게시글이 없습니다."},
 
+    //store err
+    STORE_NOT_EXIST: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "STORE4001", "message": "리뷰를 추가하려는 가게가 존재하지 않습니다."},
+
     //mission err
     MISSION_ALREADY_CHANLLENGE: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MISSION4001", "message": "미션이 이미 진행중입니다."}
 }   
