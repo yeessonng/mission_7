@@ -16,6 +16,8 @@ export const joinStore = async (body) => {
     
     const result = await getRegionStore(body.region_id);
     //const 가게 id랑, req.body regionid랑 조인하는 함수
+    
+    const transResult = storeAddResponseDTO(result);
 
-    return result;
+    return transResult;
 }

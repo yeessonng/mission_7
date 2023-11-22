@@ -10,7 +10,7 @@ export const getRegion = async () => {
         const [result] = await pool.query("select region.name from region;");
         
         conn.release();
-        return result;
+        return result; //객체 배열이 됨
         
     } catch (err) {
         throw new BaseError(status.PARAMETER_IS_WRONG);

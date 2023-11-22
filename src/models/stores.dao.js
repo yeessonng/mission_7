@@ -30,7 +30,6 @@ export const getRegionStore = async(regionId) => {
         conn.release();
 
         return regionStore;
-
     }catch(err){
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
