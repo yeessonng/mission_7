@@ -5,3 +5,7 @@ export const storeAddResponseDTO = (data) => {
 export const missionAddResponseDTO = (data) => {
     return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": data[0].term, "mission_reward": data[0].reward, "mission_complete": data[0].complete, "mission_success": data[0].success};
 }
+
+export const patchMissionResponseDTO = (data) => {
+    return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": data[0].term, "mission_reward": data[0].reward, "mission_complete": data[0].complete}
+}
