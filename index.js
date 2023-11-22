@@ -8,10 +8,10 @@ import SwaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
-import { tempRouter } from './src/routes/temp.route.js';
 import { storesRouter } from './src/routes/stores.route.js'
+import { tempRouter } from './src/routes/temp.route.js';
 
-import {testRouter } from './src/routes/test.route.js'; //지워
+import { testRouter } from './src/routes/test.route.js'; //db테스트용 나중에지웡지워
 
 dotenv.config();
 
@@ -30,7 +30,7 @@ app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
 app.use('/temp', tempRouter);
 app.use('/stores', storesRouter);
 //app.use('/user', userRouter);
-app.use('/test', testRouter); //지워지워
+app.use('/test', testRouter); //db테스트용 지워지워
 
 //error handling
 app.use((req, res, next) => {

@@ -1,0 +1,92 @@
+paths:
+  /stores/missions:
+    post:
+      tags:
+        - Stores
+      summary: 가게에 미션 추가
+      parameters:
+      - name: addMission
+        in: body
+        required: true
+        schema:
+          properties:
+            store_id:
+              type: integer
+              description: 가게 아이디
+              example: 1
+            body:
+              type: string
+              description: 미션 내용
+              example: 12000원 이상의 식사를 하세요!
+            term:
+              type: string
+              description: 미션 기한
+              example: D-7
+            reward:
+              type: integer
+              description: 보상 내역
+              example: 300
+      responses:
+        '200':
+          description: 가게 추가 완료!
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 2000
+              message:
+                type: string
+                example: "success!"
+              data:
+                type: object
+                example: {
+                  "storeName": "임진각",
+                  "mission_body": "12000원 이상의 식사를 하세요!",
+                  "mission_term": "D-7",
+                  "mission_reward": 300,
+                  "mission_complete": NULL,
+                  "mission_success": NULL
+                }
+                
+        '400':
+          description: 잘못된 요청
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: integer
+                example: COMMON001
+              message:
+                type: string
+                example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: integer
+                example: COMMON000
+              message:
+                type: string
+                example: 서버 에러, 관리자에게 문의 바랍니다.
