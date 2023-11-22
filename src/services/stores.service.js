@@ -14,10 +14,11 @@ export const joinStore = async (body) => {
         'check_status': body.check_status
     });
     
-    const result = await getRegionStore(body.region_id);
+    const result = await getRegionStore(joinStoreData);
     //const 가게 id랑, req.body regionid랑 조인하는 함수
     
     const transResult = storeAddResponseDTO(result);
+    console.log(transResult);
 
     return transResult;
 }
