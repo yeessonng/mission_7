@@ -8,3 +8,12 @@ export const storesAdd = async (req, res, next) => {
 
     res.send(response(status.SUCCESS, await joinStore(req.body)));
 }
+
+/*
+export const reviewAdd = async (req, res, next) => {
+    console.log("리뷰 추가를 요청하였습니다!");
+    console.log("body: ", req.body);
+
+    res.send(response(status.SUCCESS))
+}
+*/

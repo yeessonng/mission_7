@@ -21,11 +21,11 @@ export const addStore = async (data) => {
     }
 };
 
-
-export const getRegionStore = async(regionId) => {
+//지역하고 join하는 함수
+export const getRegionStore = async(storeId) => {
     try{
         const conn = await pool.getConnection();
-        const [regionStore] = await pool.query(getRegionStoreSql, regionId)
+        const [regionStore] = await pool.query(getRegionStoreSql, storeId)
 
         conn.release();
 
