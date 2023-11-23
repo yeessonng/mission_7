@@ -6,6 +6,10 @@ export const getRegionStoreSql = "SELECT store.name as storeName, region.name as
 
 //2
 export const checkStoreSql = "SELECT EXISTS(SELECT 1 FROM store WHERE store.id = ?) as isExistStore;";
+export const insertReviewSql = "INSERT INTO review (user_id, store_id, mission_id, star, body, review_date) VALUES (?, ?, ?, ?, ?, ?);";
+export const resultUserStoreReviewSql = "SELECT user.nickname, store.name as storeName, review.star, review.body, review.review_date FROM review " +
+"JOIN user ON user.id = review.user_id JOIN store ON store.id = review.store_id JOIN mission ON mission.id = review.mission_id " +
+"WHERE review.id = ? AND mission.success = '성공' AND mission.complete = '진행완료';";
 
 //3
 export const insertMissionSql = "INSERT INTO mission (store_id, body, term, reward) VALUES (?, ?, ?, ?);";

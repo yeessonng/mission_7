@@ -1,9 +1,9 @@
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {storeAddResponseDTO, missionAddResponseDTO, patchMissionResponseDTO} from "../dtos/stores.dto.js"
+import {storeAddResponseDTO, reviewAddResponseDTO, missionAddResponseDTO, patchMissionResponseDTO} from "../dtos/stores.dto.js"
 import {addStore, addReview, addMission} from "../models/stores.dao.js"
-import {getRegionStore, getStoreMission, confirmMission, getResultStoreMission, patchMissionChallenge} from "../models/stores.dao.js"
+import {getRegionStore, getStoreMission, confirmMission, getResultStoreMission, patchMissionChallenge, getUserStoreReview} from "../models/stores.dao.js"
 
 //1                             req.body
 export const joinStore = async (body) => {
@@ -31,13 +31,17 @@ export const joinReview = async(body) => {
         "mission_id": body.mission_id,
         "star": body.star,
         "body": body.body,
-        "review_date": body.review_data
-    });
+        "review_date": body.review_date
+    });//reviewId
     
     if(joinReviewData == -1){//가게 존재 X
         throw new BaseError(status.STORE_NOT_EXIST)
     }else{
-        
+        const result = await getUserStoreReview(joinReviewData);
+
+        const transResult = reviewAddResponseDTO(result);
+
+        return transResult;
     }
 }
 

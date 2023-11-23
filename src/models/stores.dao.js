@@ -2,7 +2,7 @@ import {pool} from "../../config/db.config.js";
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql} from "./stores.sql.js";
+import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql, insertReviewSql, resultUserStoreReviewSql} from "./stores.sql.js";
 
 //1. 특정 지역에 가게 추가
 //store 데이터 삽입
@@ -41,14 +41,32 @@ export const addReview = async(data) => {
         const conn = await pool.getConnection();
 
         const [checkStore] = await pool.query(checkStoreSql, data.store_id);
-
-        if(checkStore[0].isExistStore){//
+        
+        //리뷰를 작성하려는 가게가 존재하는지 검증
+        if(checkStore[0].isExistStore == false){//store가 존재하지 않으면
             conn.release();
-            return -1;
+            return -1;//함수 바로 리턴
         }
 
-        //const result = await pool.query(insertReviewSql, )
-        
+        const result = await pool.query(insertReviewSql, [data.user_id, data.store_id, data.mission_id, data.star, data.body, data.review_date]);
+
+        conn.release();
+
+        return result[0].insertId;//reviewId
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
+
+export const getUserStoreReview = async(reviewId) => {
+    try{
+        const conn = await pool.getConnection();
+
+        const [resultUserStoreReview] = await pool.query(resultUserStoreReviewSql, reviewId)
+
+        conn.release();
+
+        return resultUserStoreReview;
     }catch(err){
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
