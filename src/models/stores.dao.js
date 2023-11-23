@@ -2,13 +2,13 @@ import {pool} from "../../config/db.config.js";
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql, insertReviewSql, resultUserStoreReviewSql} from "./stores.sql.js";
+import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql, insertReviewSql, resultUserStoreReviewSql, getStoreIdSql, missionSuccessSql} from "./stores.sql.js";
 
 //1. 특정 지역에 가게 추가
 //store 데이터 삽입
 export const addStore = async (data) => {
     try {
-        const conn = await pool.getConnection();
+        const conn  = await pool.getConnection();
 
         const result = await pool.query(insertStoreSql, [data.region_id, data.name, data.address, data.check_status]);
 
@@ -39,16 +39,23 @@ export const getRegionStore = async(storeId) => {
 export const addReview = async(data) => {
     try{
         const conn = await pool.getConnection();
+        //storeId를 req.body로 받지 않고 missionId와 join하여 얻어 냄 mission 테이블에 storeId가 존재할 것
+        const [storeId] = await pool.query(getStoreIdSql, data.mission_id);
 
-        const [checkStore] = await pool.query(checkStoreSql, data.store_id);
-        
+        const [checkStore] = await pool.query(checkStoreSql, storeId[0].id);
+
         //리뷰를 작성하려는 가게가 존재하는지 검증
         if(checkStore[0].isExistStore == false){//store가 존재하지 않으면
             conn.release();
             return -1;//함수 바로 리턴
         }
 
-        const result = await pool.query(insertReviewSql, [data.user_id, data.store_id, data.mission_id, data.star, data.body, data.review_date]);
+        //가게가 존재하면 
+        //mission테이블의 completet와 success 부분을 바꿔줌 > 
+        //리뷰 추가하기 위해서는 mission을 진행완료, 성공해야 하기 때문에... 리뷰 추가 전에 진행완료, 성공을 했다고 가정함.
+        await pool.query(missionSuccessSql, data.mission_id);
+
+        const result = await pool.query(insertReviewSql, [data.user_id, storeId[0].id, data.mission_id, data.star, data.body, data.review_date]);
 
         conn.release();
 

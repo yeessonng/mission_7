@@ -27,7 +27,6 @@ export const joinStore = async (body) => {
 export const joinReview = async(body) => {
     const joinReviewData = await addReview({
         "user_id": body.user_id,
-		"store_id": body.store_id,
         "mission_id": body.mission_id,
         "star": body.star,
         "body": body.body,

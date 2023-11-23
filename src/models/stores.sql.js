@@ -5,6 +5,8 @@ export const getRegionStoreSql = "SELECT store.name as storeName, region.name as
 "WHERE store.id = ?;";
 
 //2
+export const missionSuccessSql = "UPDATE mission SET complete = '진행완료', success = '성공' WHERE id = ?;";
+export const getStoreIdSql = "SELECT store.id FROM mission JOIN store ON mission.store_id = store.id WHERE mission.id = ?;";
 export const checkStoreSql = "SELECT EXISTS(SELECT 1 FROM store WHERE store.id = ?) as isExistStore;";
 export const insertReviewSql = "INSERT INTO review (user_id, store_id, mission_id, star, body, review_date) VALUES (?, ?, ?, ?, ?, ?);";
 export const resultUserStoreReviewSql = "SELECT user.nickname, store.name as storeName, review.star, review.body, review.review_date FROM review " +

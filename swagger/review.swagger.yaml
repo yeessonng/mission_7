@@ -14,10 +14,6 @@ paths:
               type: integer
               description: 리뷰를 작성하는 유저 아이디
               example: 1
-            store_id:
-              type: integer
-              description: 리뷰를 작성하려는 가게 아이디
-              example: 17
             mission_id:
               type: integer
               description: 리뷰를 작성하려는 가게에 대해 성공한 미션 아이디
