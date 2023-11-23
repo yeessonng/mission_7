@@ -32,5 +32,5 @@ export const status = {
     STORE_NOT_EXIST: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "STORE4001", "message": "리뷰를 추가하려는 가게가 존재하지 않습니다."},
 
     //mission err
-    MISSION_ALREADY_CHANLLENGE: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MISSION4001", "message": "미션이 이미 진행중입니다."}
+    MISSION_ALREADY_CHANLLENGE: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MISSION4001", "message": "이미 진행중이거나 진행완료된 미션입니다."}
 }   
