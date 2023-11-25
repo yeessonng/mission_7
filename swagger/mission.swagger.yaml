@@ -19,9 +19,9 @@ paths:
               description: 미션 내용
               example: 12000원 이상의 식사를 하세요!
             term:
-              type: string
+              type: integer
               description: 미션 기한
-              example: D-7
+              example: 7
             reward:
               type: integer
               description: 보상 내역

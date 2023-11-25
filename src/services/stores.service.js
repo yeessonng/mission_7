@@ -17,10 +17,8 @@ export const joinStore = async (body) => {
     const result = await getRegionStore(joinStoreData);
     //가게 id랑, req.body regionid랑 조인하는 함수
     
-    const transResult = storeAddResponseDTO(result);
+    return(storeAddResponseDTO(result));
     //조인해서 가져온 결과를 클라이언트에게 보낼 값만 추려서 보내기 위해 dto 객체로 바꿈
-    return transResult;
-    //dto를 리턴 response> result부분이 됨
 }
 
 //2
@@ -38,9 +36,7 @@ export const joinReview = async(body) => {
     }else{
         const result = await getUserStoreReview(joinReviewData);
 
-        const transResult = reviewAddResponseDTO(result);
-
-        return transResult;
+        return(reviewAddResponseDTO(result));
     }
 }
 
@@ -55,9 +51,7 @@ export const joinMission = async(body) => {
 
     const result = await getStoreMission(joinMissionData);
 
-    const transResult = missionAddResponseDTO(result);
-    
-    return transResult;
+    return(missionAddResponseDTO(result));
 }
 
 //4
@@ -74,8 +68,6 @@ export const patchMission = async(body) => {
         const result = await getResultStoreMission(body.id);
         
         //dto로 만들자
-        const transResult = patchMissionResponseDTO(result);
-        console.log(transResult);
-        return transResult;
+        return(patchMissionResponseDTO(result));
     }
 }
