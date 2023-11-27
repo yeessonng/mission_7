@@ -31,6 +31,8 @@ app.use('/temp', tempRouter);
 app.use('/stores', storesRouter);
 //app.use('/user', userRouter);
 
+app.use('/:storeId', storesRouter);
+
 app.use('/test', testRouter); //db테스트용 지워지워
 
 //error handling

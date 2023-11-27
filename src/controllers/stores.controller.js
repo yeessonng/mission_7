@@ -1,8 +1,9 @@
 import {response} from '../../config/response.js';
 import {status} from '../../config/response.status.js';
 import {joinStore, joinReview, joinMission, patchMission} from '../services/stores.service.js';
+import {getReview} from '../providers/stores.provider.js';
 
-
+//9주차
 //1
 export const storesAdd = async (req, res, next) => {
     console.log("가게 추가를 요청하였습니다!");
@@ -33,4 +34,12 @@ export const missionChallenge = async (req, res, next) => {
     console.log("body: ", req.body);
 
     res.send(response(status.SUCCESS, await patchMission(req.body)));
+}
+
+//10주차
+//가게 리뷰 목록 조회
+export const reviewPreview = async (req, res, next) => {
+    console.log(req.query);
+
+    res.send(response(status.SUCCESS, await getReview(req.params.storeId, req.query)));
 }

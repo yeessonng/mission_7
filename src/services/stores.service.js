@@ -5,6 +5,8 @@ import {storeAddResponseDTO, reviewAddResponseDTO, missionAddResponseDTO, patchM
 import {addStore, addReview, addMission} from "../models/stores.dao.js"
 import {getRegionStore, getStoreMission, confirmMission, getResultStoreMission, patchMissionChallenge, getUserStoreReview} from "../models/stores.dao.js"
 
+
+//9주차
 //1                             req.body
 export const joinStore = async (body) => {
     const joinStoreData = await addStore({//가게 추가 >dao
@@ -67,7 +69,7 @@ export const patchMission = async(body) => {
         //response할 값 만들기
         const result = await getResultStoreMission(body.id);
         
-        //dto로 만들자
+        //dto로 만들어서 controller로 리턴 > controller가 클라이언트에게 전송!
         return(patchMissionResponseDTO(result));
     }
 }

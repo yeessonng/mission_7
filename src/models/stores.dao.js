@@ -118,7 +118,7 @@ export const confirmMission = async(missionId) => {
         const conn = await pool.getConnection();
         const [confirm] = await pool.query(confirmMissionSql, missionId);
 
-        if(confirm[0].isExistMission){//이미 진행중인 미션이면 true를 반환할 것임
+        if(confirm[0].isExistMission){//이미 진행중 OR 진행완료된 미션이면 true를 반환할 것임
             conn.release();
             return -1;
         }
@@ -151,5 +151,24 @@ export const getResultStoreMission = async(missionId) => {
         return resultStoreMission;
     }catch(err){
         throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
+
+//가게 리뷰 목록 조회
+export const getPreviewReview = async(cursorId, size, storeId) => {
+    try{
+        const conn = await pool.getConnection();
+        //cusorId가 정의되지 않았거나 null인지 확인
+        if(cursorId == "undefined" || typeof cursorId == "undefinded" || cursorId == null ){
+            const [reviews] = await 
+            conn.release();
+            return reviews;
+        }else{
+            const [reviews]
+            conn.release();
+            return reviews;
+        }
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG)
     }
 }
