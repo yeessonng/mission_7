@@ -14,3 +14,24 @@ export const missionAddResponseDTO = (data) => {
 export const patchMissionResponseDTO = (data) => {
     return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": data[0].term, "mission_reward": data[0].reward, "mission_complete": data[0].complete}
 }
+
+//10주차
+//가게 리뷰 목록 조회
+export const previewReviewResponseDTO = (data) => {
+    const reviews = [];
+    //data는 객체 배열로 들어옴
+    for(let i = 0; i < data.length; i++){
+        reviews.push({
+            "user_nickname": data[i].nickname,
+            "star": data[i].star,
+            "review_body": data[i].body,
+            "create_date": formatDate(data[i].created_at)
+        });
+    }
+    return {"reviewData": reviews, "cursorId": data[data.length-1].id};
+    //                             cusorId > 마지막으로 조회한 컨텐츠
+}
+
+const formatDate = (date) => {
+    return new Intl.DateTimeFormat('kr').format(new Date(date)).replaceAll(" ", "").slice(0, -1);
+}

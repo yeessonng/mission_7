@@ -26,3 +26,11 @@ export const patchMissionSql = "UPDATE mission SET complete = ? WHERE id = ?;";
 export const getResultStoreMissionSql = "SELECT store.name as storeName, mission.body, mission.term, mission.reward, mission.complete " +
 "FROM mission JOIN store ON mission.store_id = store.id " + 
 "WHERE mission.id = ?;";
+
+//10주차
+//가게 리뷰 목록 조회
+export const getReviewByReviewIdAtFirstSql = "SELECT user.nickname, review.id, review.star, review.body, review.created_at " +
+"FROM review JOIN user on review.user_id = user.id WHERE review.store_id = ? ORDER BY review.id DESC LIMIT ?;";
+export const getReviewByReviewIdSql = "SELECT user.nickname, review.id, review.star, review.body, review.created_at " +
+"FROM review JOIN user on review.user_id = user.id WHERE review.store_id = ? AND review.id < ? " +
+"ORDER BY review.id DESC LIMIT ?;";

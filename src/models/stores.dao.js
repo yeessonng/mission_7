@@ -2,7 +2,7 @@ import {pool} from "../../config/db.config.js";
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql, insertReviewSql, resultUserStoreReviewSql, getStoreIdSql, missionSuccessSql} from "./stores.sql.js";
+import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, checkStoreSql, insertReviewSql, resultUserStoreReviewSql, getStoreIdSql, missionSuccessSql, getReviewByReviewIdSql, getReviewByReviewIdAtFirstSql} from "./stores.sql.js";
 
 //1. 특정 지역에 가게 추가
 //store 데이터 삽입
@@ -160,11 +160,11 @@ export const getPreviewReview = async(cursorId, size, storeId) => {
         const conn = await pool.getConnection();
         //cusorId가 정의되지 않았거나 null인지 확인
         if(cursorId == "undefined" || typeof cursorId == "undefinded" || cursorId == null ){
-            const [reviews] = await 
+            const [reviews] = await pool.query(getReviewByReviewIdAtFirstSql, [parseInt(storeId), parseInt(size)]);
             conn.release();
             return reviews;
         }else{
-            const [reviews]
+            const [reviews] = await pool.query(getReviewByReviewIdSql, [parseInt(storeId), parseInt(cursorId), parseInt(size)]);
             conn.release();
             return reviews;
         }

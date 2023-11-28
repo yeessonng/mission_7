@@ -19,4 +19,4 @@ storesRouter.patch('/missions', asyncHandler(missionChallenge));
 
 //10주차
 //가게 리뷰 목록 조회
-storesRouter.get('reviews', asyncHandler(reviewPreview));
+storesRouter.get('/reviews', asyncHandler(reviewPreview));

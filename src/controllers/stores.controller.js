@@ -39,7 +39,5 @@ export const missionChallenge = async (req, res, next) => {
 //10주차
 //가게 리뷰 목록 조회
 export const reviewPreview = async (req, res, next) => {
-    console.log(req.query);
-
     res.send(response(status.SUCCESS, await getReview(req.params.storeId, req.query)));
 }
