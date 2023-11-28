@@ -43,3 +43,10 @@ export const getUserReviewByReviewIdAtFirstSql = "SELECT store.name, review.id, 
 export const getUerReviewByReviewIdSql = "SELECT store.name, review.id, review.star, review.body, review.created_at FROM review " +
 "JOIN user ON review.user_id = user.id JOIN store ON review.store_id = store.id " +
 "WHERE review.user_id = ? AND review.id < ? ORDER BY review.id DESC LIMIT ?;";
+
+//특정 가게 미션 목록 조회
+export const getStoreMissionByMissionIdAtFirstSql = "SELECT mission.id, mission.body, mission.term, mission.reward, mission.complete, mission.success " +
+"FROM mission JOIN store ON mission.store_id = store.id WHERE mission.store_id = ? ORDER BY mission.id DESC LIMIT ?;";
+
+export const getStoreMissionByMissionIdSql = "SELECT mission.id, mission.body, mission.term, mission.reward, mission.complete, mission.success " +
+"FROM mission JOIN store ON mission.store_id = store.id WHERE mission.store_id = ? AND mission.id < ? ORDER BY mission.id DESC LIMIT ?;";

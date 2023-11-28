@@ -1,7 +1,7 @@
 import {response} from '../../config/response.js';
 import {status} from '../../config/response.status.js';
 import {joinStore, joinReview, joinMission, patchMission} from '../services/stores.service.js';
-import {getReview, getUserReview} from '../providers/stores.provider.js';
+import {getReview, getUserReview, getStoreMission} from '../providers/stores.provider.js';
 
 //9주차
 //1
@@ -41,4 +41,9 @@ export const reviewPreview = async (req, res, next) => {
 //사용자 리뷰 목록 조회
 export const userReviewPreview = async (req, res, next) => {
     res.send(response(status.SUCCESS, await getUserReview(req.params.userId, req.query)));
+}
+
+//특정 가게 미션 목록 조회
+export const missionPreview = async (req, res, next) => {
+    res.send(response(status.SUCCESS, await getStoreMission(req.params.storeId, req.query)));
 }

@@ -2,7 +2,7 @@ import {pool} from "../../config/db.config.js";
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, insertReviewSql, resultUserStoreReviewSql, missionSuccessSql, getReviewByReviewIdSql, getReviewByReviewIdAtFirstSql, getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql} from "./stores.sql.js";
+import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, insertReviewSql, resultUserStoreReviewSql, missionSuccessSql, getReviewByReviewIdSql, getReviewByReviewIdAtFirstSql, getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, getStoreMissionByMissionIdAtFirstSql, getStoreMissionByMissionIdSql} from "./stores.sql.js";
 import {getStoreIdSql, checkStoreSql, checkUserIdSql} from './stores.sql.js';
 //1. 특정 지역에 가게 추가
 //store 데이터 삽입
@@ -45,7 +45,7 @@ export const addReview = async(data) => {
         const [checkStore] = await pool.query(checkStoreSql, storeId[0].id);
 
         //리뷰를 작성하려는 가게가 존재하는지 검증
-        if(checkStore[0].isExistStore == false){//store가 존재하지 않으면
+        if(!checkStore[0].isExistStore){//store가 존재하지 않으면
             conn.release();
             return -1;//함수 바로 리턴
         }
@@ -191,17 +191,18 @@ export const getCheckUserId = async(userId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG)
     }
 }
+
 export const getUserPreviewReview = async(cursorId, size, userId) => {
     try{
         const conn = await pool.getConnection();
 
         //cursorId x >처음으로 들어 페이지 요청할 때
         if(cursorId == "undefined" || typeof cursorId == "undefined" || cursorId == null){
-            const [reviews] = await pool.query(getUserReviewByReviewIdAtFirstSql, [parseInt(userId), parseInt(size)])
+            const [reviews] = await pool.query(getUserReviewByReviewIdAtFirstSql, [parseInt(userId), parseInt(size)]);
             conn.release();
             return reviews;
         }else{
-            const [reviews] = await pool.query(getUerReviewByReviewIdSql, [parseInt(userId), parseInt(cursorId), parseInt(size)])
+            const [reviews] = await pool.query(getUerReviewByReviewIdSql, [parseInt(userId), parseInt(cursorId), parseInt(size)]);
             conn.release();
             return reviews;
         }
@@ -211,3 +212,38 @@ export const getUserPreviewReview = async(cursorId, size, userId) => {
 }
 
 //가게 미션 목록 조회
+
+//가게 있는지 확인
+export const getCheckStoreId = async(storeId) => {
+    try{
+        const conn = await pool.getConnection();
+        const [checkStoreId] = await pool.query(checkStoreSql, storeId);
+
+        if(!checkStoreId[0].isExistStore){
+            conn.release();
+            return -1;
+        }
+        conn.release();
+        return true;
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
+
+export const getStorePreviewMission = async(cursorId, size, storeId) => {
+    try{
+        const conn = await pool.getConnection();
+        
+        if(cursorId == "undefined" || typeof cursorId == "undefined" || cursorId == null){
+            const [missions] = await pool.query(getStoreMissionByMissionIdAtFirstSql, [parseInt(storeId), parseInt(size)]);
+            conn.release();
+            return missions;
+        }else{
+            const [missions] = await pool.query(getStoreMissionByMissionIdSql, [parseInt(storeId), parseInt(cursorId), parseInt(size)]);
+            conn.release();
+            return missions;
+        }
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}

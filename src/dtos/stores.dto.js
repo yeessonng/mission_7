@@ -48,3 +48,18 @@ export const previewUserReviewResponseDTO = (data) => {
     }
     return {"reviewData": reviews, "cursorId": data[data.length-1].id};
 }
+
+//특정 가게 미션 목록 조회
+export const previewStoreMissionResponseDTO = (data) => {
+    const missions = [];
+    for(let i = 0; i < data.length; i++){
+        missions.push({
+            "mission_body": data[i].body,
+            "term": ('D-' + data[i].term),
+            "reward": (data[i].reward + 'P'),
+            "complete": data[i].complete,
+            "success": data[i].success
+        });
+    }
+    return {"missionData": missions, "cursorId": data[data.length-1].id};
+}
