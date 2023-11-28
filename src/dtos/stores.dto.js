@@ -13,10 +13,6 @@ export const reviewAddResponseDTO = (data) => {
 export const missionAddResponseDTO = (data) => {
     return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": ('D-' + data[0].term), "mission_reward": data[0].reward, "mission_complete": data[0].complete, "mission_success": data[0].success};
 }
-//4
-export const patchMissionResponseDTO = (data) => {
-    return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": data[0].term, "mission_reward": data[0].reward, "mission_complete": data[0].complete}
-}
 
 //10주차
 //가게 리뷰 목록 조회
@@ -33,20 +29,6 @@ export const previewReviewResponseDTO = (data) => {
     }
     return {"reviewData": reviews, "cursorId": data[data.length-1].id};
     //                             cusorId > 마지막으로 조회한 컨텐츠
-}
-
-//사용자 리뷰 목록 조회
-export const previewUserReviewResponseDTO = (data) => {
-    const reviews = [];
-    for(let i = 0; i < data.length; i++){
-        reviews.push({
-            "store_name": data[i].name,
-            "star": data[i].star,
-            "review_body": data[i].body,
-            "create_date": formatDate(data[i].created_at)
-        });
-    }
-    return {"reviewData": reviews, "cursorId": data[data.length-1].id};
 }
 
 //특정 가게 미션 목록 조회
