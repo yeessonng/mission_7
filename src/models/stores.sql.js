@@ -34,3 +34,12 @@ export const getReviewByReviewIdAtFirstSql = "SELECT user.nickname, review.id, r
 export const getReviewByReviewIdSql = "SELECT user.nickname, review.id, review.star, review.body, review.created_at " +
 "FROM review JOIN user on review.user_id = user.id WHERE review.store_id = ? AND review.id < ? " +
 "ORDER BY review.id DESC LIMIT ?;";
+
+//사용자 리뷰 목록 조회
+export const checkUserIdSql = "SELECT EXISTS(SELECT 1 FROM user WHERE user.id = ?) as isExistUser";
+export const getUserReviewByReviewIdAtFirstSql = "SELECT store.name, review.id, review.star, review.body, review.created_at FROM review " +
+"JOIN user ON review.user_id = user.id JOIN store ON review.store_id = store.id " +
+"WHERE review.user_id = ? ORDER BY review.id DESC LIMIT ?;";
+export const getUerReviewByReviewIdSql = "SELECT store.name, review.id, review.star, review.body, review.created_at FROM review " +
+"JOIN user ON review.user_id = user.id JOIN store ON review.store_id = store.id " +
+"WHERE review.user_id = ? AND review.id < ? ORDER BY review.id DESC LIMIT ?;";

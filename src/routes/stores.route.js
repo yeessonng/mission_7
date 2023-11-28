@@ -1,7 +1,6 @@
 import express from "express";
 import asyncHandler from 'express-async-handler';
-import {storesAdd, reviewAdd, missionAdd, missionChallenge} from "../controllers/stores.controller.js";
-import {reviewPreview} from '../controllers/stores.controller.js'
+import {storesAdd, reviewAdd, missionAdd, missionChallenge, reviewPreview} from "../controllers/stores.controller.js";
 export const storesRouter = express.Router({mergeParams: true});
 
 //9주차

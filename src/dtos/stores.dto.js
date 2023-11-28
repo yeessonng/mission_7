@@ -1,3 +1,6 @@
+const formatDate = (date) => {
+    return new Intl.DateTimeFormat('kr').format(new Date(date)).replaceAll(" ", "").slice(0, -1);
+}
 //1
 export const storeAddResponseDTO = (data) => {
     return {"region": data[0].regionName, "storeName": data[0].storeName};
@@ -32,6 +35,16 @@ export const previewReviewResponseDTO = (data) => {
     //                             cusorId > 마지막으로 조회한 컨텐츠
 }
 
-const formatDate = (date) => {
-    return new Intl.DateTimeFormat('kr').format(new Date(date)).replaceAll(" ", "").slice(0, -1);
+//사용자 리뷰 목록 조회
+export const previewUserReviewResponseDTO = (data) => {
+    const reviews = [];
+    for(let i = 0; i < data.length; i++){
+        reviews.push({
+            "store_name": data[i].name,
+            "star": data[i].star,
+            "review_body": data[i].body,
+            "create_date": formatDate(data[i].created_at)
+        });
+    }
+    return {"reviewData": reviews, "cursorId": data[data.length-1].id};
 }

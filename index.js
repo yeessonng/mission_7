@@ -10,8 +10,7 @@ import cors from 'cors';
 
 import { storesRouter } from './src/routes/stores.route.js'
 import { tempRouter } from './src/routes/temp.route.js';
-
-import { testRouter } from './src/routes/test.route.js'; //db테스트용 나중에지웡지워
+import { userRouter } from './src/routes/user.route.js';
 
 dotenv.config();
 
@@ -31,9 +30,8 @@ app.use('/temp', tempRouter);
 app.use('/stores', storesRouter);
 //app.use('/user', userRouter);
 
-app.use('/:storeId', storesRouter);
-
-app.use('/test', testRouter); //db테스트용 지워지워
+app.use('/stores/:storeId', storesRouter);
+app.use('/users/:userId', userRouter);
 
 //error handling
 app.use((req, res, next) => {

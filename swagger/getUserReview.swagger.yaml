@@ -1,11 +1,11 @@
 paths:
-  /stores/{storeId}/reviews:
+  /users/{userId}/reviews:
     get:
       tags:
-        - Stores
-      summary: 가게 별 리뷰 목록 조회
+        - Users
+      summary: 사용자가 작성한 리뷰 목록 조회
       parameters:
-        - name: storeId
+        - name: userId
           in: path
           schema:
             type: integer
@@ -47,13 +47,13 @@ paths:
                 example: {
                   "reviewData": [
                     {
-                      "user_name": "SwaggerTest1",
+                      "store_name": "음식점",
                       "star": 5,
                       "review_body": "리뷰2",
                       "create_date": "2000.03.01"
                     },
                     {
-                      "user_name": "SwaggerTest2",
+                      "store_name": "카페",
                       "rate": 4.5,
                       "review_body": "리뷰1",
                       "create_date": "2000.02.02"
