@@ -1,3 +1,4 @@
+
 //4
 //이미 진행중이거나 진행완료 된 미션인지 확인 > 1을 반환
 export const confirmMissionSql = "SELECT EXISTS(SELECT 1 FROM mission WHERE mission.id = ? AND mission.complete IS NOT NULL) as isExistCompleteMission";
