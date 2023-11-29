@@ -18,7 +18,7 @@ export const getUserReview = async (userId, query) => {
 
 //내가 진행중인 미션 목록 조회
 export const getUserMissionComplete = async(userId, query) => {
-    //userId 있는지 검사
+    //매핑테이블에 해당 userId가 미션을 진행하고 있는가 검사
     const confirm = await getCheckMissionUserId(parseInt(userId));
     if(confirm == -1){
         throw new BaseError(status.USER_NOT_MISSION_CHANLLENGE);
