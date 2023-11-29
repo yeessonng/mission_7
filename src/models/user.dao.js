@@ -3,7 +3,7 @@ import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
 import {checkUserIdSql} from './user.sql.js'
-import {getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql} from './user.sql.js'
+import {getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, insertUserMission} from './user.sql.js'
 
 //4. 미션 도전
 //이미 진행중인 미션인지 확인
@@ -12,7 +12,7 @@ export const confirmMission = async(missionId) => {
         const conn = await pool.getConnection();
         const [confirm] = await pool.query(confirmMissionSql, missionId);
 
-        if(confirm[0].isExistMission){//이미 진행중 OR 진행완료된 미션이면 true를 반환할 것임
+        if(confirm[0].isExistCompleteMission){//이미 진행중 OR 진행완료된 미션이면 true를 반환할 것임
             conn.release();
             return -1;
         }
@@ -24,10 +24,10 @@ export const confirmMission = async(missionId) => {
     }
 }
 
-export const patchMissionChallenge = async(body) => {
+export const patchMissionChallenge = async(status, missionId) => {
     try{
         const conn = await pool.getConnection();
-        await pool.query(patchMissionSql, [body.complete, body.id]);
+        await pool.query(patchMissionSql, [status, missionId]);
 
         conn.release();
     }catch(err){
@@ -48,6 +48,16 @@ export const getResultStoreMission = async(missionId) => {
     }
 }
 
+export const addUserMission = async(data) => {
+    try{
+        const conn = await pool.getConnection();
+        await pool.query(insertUserMission, [data.user_id, data.mission_id]);
+
+        conn.release();
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
 
 
 //사용자 리뷰 목록 조회

@@ -4,7 +4,7 @@ const formatDate = (date) => {
 
 //4
 export const patchMissionResponseDTO = (data) => {
-    return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": data[0].term, "mission_reward": data[0].reward, "mission_complete": data[0].complete}
+    return {"store_name": data[0].storeName, "mission_body": data[0].body, "term": ('D-' + data[0].term), "reward": (data[0].reward + 'P'), "complete": data[0].complete}
 }
 
 //사용자 리뷰 목록 조회

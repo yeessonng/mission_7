@@ -8,7 +8,7 @@ import { patchMission } from '../services/user.service.js';
 export const missionChallenge = async (req, res, next) => {
     console.log("미션 도전을 요청하였습니다!");
 
-    res.send(response(status.SUCCESS, await patchMission(req.body)));
+    res.send(response(status.SUCCESS, await patchMission(req.params.userId, req.params.missionId, req.body)));
 }
 
 //사용자 리뷰 목록 조회

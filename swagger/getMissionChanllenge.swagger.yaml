@@ -1,23 +1,29 @@
 paths:
-  /stores/missions:
-    patch:
+  /users/{userId}/missions/{missionId}:
+    post:
       tags:
-        - Stores
+        - Users
       summary: 미션 도전하기
       parameters:
-      - name: patchMission
-        in: body
-        required: true
-        schema:
-          properties:
-            id:
-              type: integer
-              description: 미션 아이디
-              example: 1
-            complete:
-              type: string
-              description: 미션을 도전 중인 미션으로 만듬
-              example: 진행중
+        - name: userId
+          in: path
+          schema:
+            type: integer
+          required: true
+        - name: missionId
+          in: path
+          schema:
+            type: integer
+          required: true
+        - name: patchStatus
+          in: body
+          required: true
+          schema:
+            properties:
+              status:
+                type: string
+                description: 미션 null > 도전 상태로 만들어줌
+                example: 진행중
       responses:
         '200':
           description: 도전중인 미션이 되었습니다!
