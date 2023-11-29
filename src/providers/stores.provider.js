@@ -15,7 +15,7 @@ export const getStoreMission = async (storeId, query) => {
     const confirm = await getCheckStoreId(parseInt(storeId));
     
     if(confirm == -1){
-        throw new BaseError(status.STORE_NOT_EXIST);
+        throw new BaseError(status.STORE_NOT_MISSION);
     }
     
     const {missionId, paging = 3} = query;

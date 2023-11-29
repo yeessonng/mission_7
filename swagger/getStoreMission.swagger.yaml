@@ -49,16 +49,12 @@ paths:
                     {
                       "mission_body": "미션내용",
                       "term": "D-7",
-                      "reward": "300P",
-                      "complete": "진행중",
-                      "success": null
+                      "reward": "300P"
                     },
                     {
                       "mission_body": "미션내용",
                       "term": "D-9",
-                      "reward": "450P",
-                      "complete": "진행완료",
-                      "success": "성공"
+                      "reward": "450P"
                     }
                   ],
                   "cursorId": 1

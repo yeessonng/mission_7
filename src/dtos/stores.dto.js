@@ -38,9 +38,7 @@ export const previewStoreMissionResponseDTO = (data) => {
         missions.push({
             "mission_body": data[i].body,
             "term": ('D-' + data[i].term),
-            "reward": (data[i].reward + 'P'),
-            "complete": data[i].complete,
-            "success": data[i].success
+            "reward": (data[i].reward + 'P')
         });
     }
     return {"missionData": missions, "cursorId": data[data.length-1].id};

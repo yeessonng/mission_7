@@ -3,7 +3,7 @@ import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
 import {insertStoreSql, getRegionStoreSql, insertMissionSql, getStoreMissionSql, insertReviewSql, resultUserStoreReviewSql, missionSuccessSql, getReviewByReviewIdSql, getReviewByReviewIdAtFirstSql, getStoreMissionByMissionIdAtFirstSql, getStoreMissionByMissionIdSql} from "./stores.sql.js";
-import {getStoreIdSql, checkStoreSql} from './stores.sql.js';
+import {getStoreIdSql, checkStoreSql, checkMissionStoreSql} from './stores.sql.js';
 //1. 특정 지역에 가게 추가
 //store 데이터 삽입
 export const addStore = async (data) => {
@@ -135,7 +135,7 @@ export const getPreviewReview = async(cursorId, size, storeId) => {
 export const getCheckStoreId = async(storeId) => {
     try{
         const conn = await pool.getConnection();
-        const [checkStoreId] = await pool.query(checkStoreSql, storeId);
+        const [checkStoreId] = await pool.query(checkMissionStoreSql, storeId);
 
         if(!checkStoreId[0].isExistStore){
             conn.release();

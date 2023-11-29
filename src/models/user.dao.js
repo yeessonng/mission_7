@@ -61,7 +61,7 @@ export const addUserMission = async(data) => {
 
 
 //사용자 리뷰 목록 조회
-//사용자 있는지 확인
+//사용자 리뷰 작성 여부
 export const getCheckUserId = async(userId) => {
     try{
         const conn = await pool.getConnection();

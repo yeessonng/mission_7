@@ -6,10 +6,10 @@ import {previewUserReviewResponseDTO, previewUserMissionCompleteResponseDTO} fro
 
 //사용자 리뷰 목록 조회
 export const getUserReview = async (userId, query) => {
-    //userId 있는지 검사
+    //review테이블에 userId 있는지 검사
     const confirm = await getCheckUserId(parseInt(userId));
     if(confirm == -1){
-        throw new BaseError(status.MEMBER_NOT_FOUND);
+        throw new BaseError(status.USER_NOT_REVIEW);
     }
 
     const {reviewId, paging = 3} = query;
