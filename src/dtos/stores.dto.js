@@ -11,7 +11,7 @@ export const reviewAddResponseDTO = (data) => {
 }
 //3
 export const missionAddResponseDTO = (data) => {
-    return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": ('D-' + data[0].term), "mission_reward": (data[0].reward + 'P'), "mission_complete": data[0].complete, "mission_success": data[0].success};
+    return {"storeName": data[0].storeName, "mission_body": data[0].body, "mission_term": ('D-' + data[0].term), "mission_reward": (data[0].reward + 'P')};
 }
 
 //10주차

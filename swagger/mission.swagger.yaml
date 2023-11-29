@@ -50,9 +50,7 @@ paths:
                   "storeName": "임진각",
                   "mission_body": "12000원 이상의 식사를 하세요!",
                   "mission_term": "D-7",
-                  "mission_reward": 300,
-                  "mission_complete": NULL,
-                  "mission_success": NULL
+                  "mission_reward": 300
                 }
                 
         '400':
