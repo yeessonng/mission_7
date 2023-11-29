@@ -131,7 +131,6 @@ export const getPreviewReview = async(cursorId, size, storeId) => {
 
 
 //가게 미션 목록 조회
-
 //가게 있는지 확인
 export const getCheckStoreId = async(storeId) => {
     try{

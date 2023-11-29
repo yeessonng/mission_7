@@ -47,21 +47,21 @@ paths:
                 example: {
                   "missionData": [
                     {
+                      "store_name": "가게이름",
                       "mission_body": "미션내용",
-                      "term": "D-7",
-                      "reward": "300P",
-                      "complete": "진행중",
-                      "success": null
+				              "term": "D-9",
+				              "reward": "500P",
+				              "complete": "진행중"
                     },
                     {
+                      "store_name": "가게이름",
                       "mission_body": "미션내용",
                       "term": "D-9",
                       "reward": "450P",
-                      "complete": "진행완료",
-                      "success": "성공"
+                      "complete": "진행중"
                     }
                   ],
-                  "cursorId": 1
+                  "cursorId": 3
                 }
                 
         '400':
