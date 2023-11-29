@@ -15,3 +15,12 @@ export const getUserReviewByReviewIdAtFirstSql = "SELECT store.name, review.id, 
 export const getUerReviewByReviewIdSql = "SELECT store.name, review.id, review.star, review.body, review.created_at FROM review " +
 "JOIN user ON review.user_id = user.id JOIN store ON review.store_id = store.id " +
 "WHERE review.user_id = ? AND review.id < ? ORDER BY review.id DESC LIMIT ?;";
+
+//내가 진행중인 미션 목록 조회
+export const checkUserMissionIdSql = "SELECT EXISTS(SELECT 1 FROM user_mission JOIN mission ON user_mission.mission_id = mission.id WHERE user_mission.user_id = ? AND mission.complete = '진행중') as isExistUser";
+export const getUserMissionByMissionIdAtFirstSql = "SELECT mission.id, store.name, mission.body, mission.term, mission.reward, mission.complete " +
+"FROM user_mission JOIN mission ON user_mission.mission_id = mission.id JOIN store ON mission.store_id = store.id " +
+"WHERE user_mission.user_id = ? AND mission.complete = '진행중' ORDER BY mission.id DESC LIMIT ?;";
+export const getUserMissionByMissionIdSql= "SELECT mission.id, store.name, mission.body, mission.term, mission.reward, mission.complete " +
+"FROM user_mission JOIN mission ON user_mission.mission_id = mission.id JOIN store ON mission.store_id = store.id " +
+"WHERE user_mission.user_id = ? AND mission.complete = '진행중' AND mission.id < ? ORDER BY mission.id DESC LIMIT ?;";

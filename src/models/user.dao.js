@@ -2,8 +2,8 @@ import {pool} from "../../config/db.config.js";
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {checkUserIdSql} from './user.sql.js'
-import {getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, insertUserMission} from './user.sql.js'
+import {checkUserIdSql, checkUserMissionIdSql} from './user.sql.js'
+import {getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, insertUserMission, getUserMissionByMissionIdAtFirstSql, getUserMissionByMissionIdSql} from './user.sql.js'
 
 //4. 미션 도전
 //이미 진행중인 미션인지 확인
@@ -94,5 +94,40 @@ export const getUserPreviewReview = async(cursorId, size, userId) => {
         }
     }catch(err){
         throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
+
+//내가 진행중인 미션 목록 조회
+//user_mission 매핑 테이블에 userId 있는지 확인
+export const getCheckMissionUserId = async(userId) => {
+    try{
+        const conn = await pool.getConnection();
+        const [checkUserId] = await pool.query(checkUserMissionIdSql, userId);
+
+        if(!checkUserId[0].isExistUser){
+            conn.release();
+            return -1;
+        }
+        conn.release();
+        return true;
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG)
+    }
+}
+export const getUserMissionReview = async(cursorId, size, userId) => {
+    try{
+        const conn = await pool.getConnection();
+
+        if(cursorId == "undefinded" || typeof cursorId == "undefined" || cursorId == null){
+            const [missions] = await pool.query(getUserMissionByMissionIdAtFirstSql, [parseInt(userId), parseInt(size)]);
+            conn.release();
+            return missions;
+        }else{
+            const [missions] = await pool.query(getUserMissionByMissionIdSql, [parseInt(userId), parseInt(cursorId), parseInt(size)]);
+            conn.release();
+            return missions;
+        }
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG)
     }
 }

@@ -1,7 +1,7 @@
 import {response} from '../../config/response.js';
 import {status} from '../../config/response.status.js';
 
-import { getUserReview } from '../providers/user.provider.js';
+import { getUserReview, getUserMissionComplete } from '../providers/user.provider.js';
 import { patchMission } from '../services/user.service.js';
 
 //4
@@ -14,4 +14,9 @@ export const missionChallenge = async (req, res, next) => {
 //사용자 리뷰 목록 조회
 export const userReviewPreview = async (req, res, next) => {
     res.send(response(status.SUCCESS, await getUserReview(req.params.userId, req.query)));
+}
+
+//내가 진행중인 미션 목록 조회
+export const userMissionCompletePreview = async (req, res, next) => {
+    res.send(response(status.SUCCESS, await getUserMissionComplete(req.params.userId, req.query)));
 }

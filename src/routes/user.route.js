@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from 'express-async-handler';
-import {userReviewPreview, missionChallenge} from '../controllers/user.controller.js';
+import {userReviewPreview, missionChallenge, userMissionCompletePreview} from '../controllers/user.controller.js';
 
 export const userRouter = express.Router({mergeParams: true});
 
@@ -12,5 +12,5 @@ userRouter.post('/missions/:missionId', asyncHandler(missionChallenge))
 //사용자 리뷰 목록 조회
 userRouter.get('/reviews', asyncHandler(userReviewPreview));
 
-//
-//userRouter.patch('/missions/:missionId', )
+//내가 진행중인 미션 목록 조회
+userRouter.get('/missions-chanllenge', asyncHandler(userMissionCompletePreview));

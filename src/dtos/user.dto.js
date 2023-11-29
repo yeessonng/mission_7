@@ -20,3 +20,19 @@ export const previewUserReviewResponseDTO = (data) => {
     }
     return {"reviewData": reviews, "cursorId": data[data.length-1].id};
 }
+
+//내가 진행중인 미션 목록 조회
+export const previewUserMissionCompleteResponseDTO = (data) => {
+    console.log(data);
+    const missions = [];
+    for(let i = 0; i < data.length; i++){
+        missions.push({
+            "store_name": data[i].name,
+            "mission_body": data[i].body,
+            "term": ('D-' + data[i].term),
+            "reward": (data[i].reward + 'P'),
+            "complete": data[i].complete
+        })
+    }
+    return {"missionData": missions, "cursorId": data[data.length-1].id};
+}

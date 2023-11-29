@@ -29,8 +29,8 @@ export const missionAdd = async (req, res, next) => {
 export const reviewPreview = async (req, res, next) => {
     res.send(response(status.SUCCESS, await getReview(req.params.storeId, req.query)));
 }
-//10주차
 
+//10주차
 //특정 가게 미션 목록 조회
 export const missionPreview = async (req, res, next) => {
     res.send(response(status.SUCCESS, await getStoreMission(req.params.storeId, req.query)));
