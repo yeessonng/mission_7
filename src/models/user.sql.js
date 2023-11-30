@@ -25,5 +25,12 @@ export const getUserMissionByMissionIdSql= "SELECT mission.id, store.name, missi
 "FROM user_mission JOIN mission ON user_mission.mission_id = mission.id JOIN store ON mission.store_id = store.id " +
 "WHERE user_mission.user_id = ? AND user_mission.complete = '진행중' AND mission.id < ? ORDER BY mission.id DESC LIMIT ?;";
 
-//진행중인 미션 > 성공중인 미션 > 조회
+//진행중인 미션 > 진행완료 미션 > 조회
+export const checkUserMissionSuccessIdSql = "SELECT EXISTS(select 1 from user_mission where user_mission.user_id = ? AND user_mission.mission_id = ? AND user_mission.complete = '진행완료') as isExistUserMissionSuccess;";
 export const patchUserMissionSuccessSql = "UPDATE user_mission SET complete = ?, success = ? WHERE user_id = ? AND mission_id = ?;";
+export const getUerMissionSuccessByMissionIdAtFirstSql = "SELECT mission.id, store.name, mission.body, mission.reward, user_mission.complete, user_mission.success " +
+"FROM user_mission JOIN mission ON user_mission.mission_id = mission.id JOIN store ON mission.store_id = store.id " +
+"WHERE user_mission.user_id = ? AND user_mission.complete = '진행완료' ORDER BY mission.id DESC LIMIT ?;";
+export const getUerMissionSuccessByMissionIdSql = "SELECT mission.id, store.name, mission.body, mission.reward, user_mission.complete, user_mission.success " +
+"FROM user_mission JOIN mission ON user_mission.mission_id = mission.id JOIN store ON mission.store_id = store.id " +
+"WHERE user_mission.user_id = ? AND user_mission.complete = '진행완료' AND mission.id < ? ORDER BY mission.id DESC LIMIT ?;";;

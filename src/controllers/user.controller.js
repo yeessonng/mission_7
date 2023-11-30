@@ -21,7 +21,7 @@ export const userMissionCompletePreview = async (req, res, next) => {
     res.send(response(status.SUCCESS, await getUserMissionComplete(req.params.userId, req.query)));
 }
 
-//진행중인 미션 > 성공중인 미션 > 조회
+//진행중인 미션 > 진행 완료 미션 > 조회
 export const missionSuccess = async(req, res, next) => {
     res.send(response(status.SUCCESS, await patchMissionSuccess(req.params.userId, req.params.missionId, req.body, req.query)));
 }

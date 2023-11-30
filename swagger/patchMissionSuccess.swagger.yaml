@@ -1,9 +1,9 @@
 paths:
-  /users/{userId}/missions/{missionId}:
-    post:
+   /users/{userId}/missions/{missionId}/success:
+    patch:
       tags:
         - Users
-      summary: 미션 도전하기
+      summary: 진행중인 미션 진행완료로 바꾸기 & 조회
       parameters:
         - name: userId
           in: path
@@ -15,18 +15,36 @@ paths:
           schema:
             type: integer
           required: true
-        - name: patchStatus
+        - name: cursorId
+          in: query
+          required: false
+          schema:
+            properties:
+              missionId:
+                type: integer
+        - name: paging
+          in: query
+          required: true
+          schema:
+            properties:
+              size:
+                type: integer
+        - name: patchMissionSuccess
           in: body
           required: true
           schema:
             properties:
-              status:
+              complete:
                 type: string
-                description: 미션 > 도전 상태로 만들어줌
-                example: 진행중
+                description: 미션 > 진행완료 상태로 만들어줌
+                example: 진행완료
+              success:
+                type: string
+                description: 미션 성공 / 실패여부
+                example: 성공
       responses:
         '200':
-          description: 도전중인 미션이 되었습니다!
+          description: 미션이 진행 완료 되었습니다!
           schema:
             type: object
             properties:
@@ -43,13 +61,25 @@ paths:
                 type: string
                 example: "success!"
               data:
-                type: object
+                type: array
                 example: {
-                  "storeName": "임진각",
-                  "mission_body": "12000원 이상의 식사를 하세요!",
-                  "mission_term": "D-7",
-                  "mission_reward": 300,
-                  "mission_complete": "진행중"
+                  "missionData": [
+                    {
+                      "store_name": "가게이름",
+                      "mission_body": "미션내용",
+				              "reward": "500P",
+				              "complete": "진행완료",
+				              "success": "성공"
+                    },
+                    {
+                      "store_name": "가게이름",
+                      "mission_body": "미션내용",
+                      "reward": "450P",
+                      "complete": "진행완료",
+                      "success": "실패"
+                    }
+                  ],
+                  "cursorId": 3
                 }
                 
         '400':

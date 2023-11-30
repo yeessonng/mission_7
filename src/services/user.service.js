@@ -1,10 +1,8 @@
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {patchMissionResponseDTO} from "../dtos/user.dto.js"
-import {confirmMission, getResultStoreMission, addUserMission, getCheckMissionUserId, patchUserMissionSuccess, getUserMissionSuccess} from "../models/user.dao.js"
-
-import {previewUserMissionSuccessResponseDTO} from '../dtos/owner.dto.js';
+import {patchMissionResponseDTO, previewUserMissionSuccessResponseDTO} from "../dtos/user.dto.js"
+import {confirmMission, getResultStoreMission, addUserMission, getCheckMissionUserSuccessId, getCheckMissionUserId, patchUserMissionSuccess, getUserMissionSuccess} from "../models/user.dao.js"
 
 //4
 export const patchMission = async(userId, missionId, body) => {
@@ -30,12 +28,17 @@ export const patchMission = async(userId, missionId, body) => {
 
 }
 
-//진행중인 미션 > 성공중인 미션 > 조회
+//진행중인 미션 > 진행완료 미션 > 조회
 export const patchMissionSuccess = async(userId, missionId, body, query) => {
     //매핑 테이블에 해당 userId가 미션을 진행하고 있는가 검사
     const confirm = await getCheckMissionUserId(parseInt(userId));
     if(confirm == -1){
         throw new BaseError(status.USER_NOT_MISSION_CHANLLENGE);
+    }
+    //userId가 미션을 진행하고 있음 > 진행완료 상태로 바꾸려는 미션이 이미 진행완료가 되었는지 확인
+    const check = await getCheckMissionUserSuccessId(parseInt(userId), parseInt(missionId));
+    if(check == -1){
+        throw new BaseError(status.MISSION_ALREADY_SUCCESS);
     }
 
     await patchUserMissionSuccess(parseInt(userId), parseInt(missionId), body);

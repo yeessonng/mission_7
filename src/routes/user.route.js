@@ -15,5 +15,5 @@ userRouter.get('/reviews', asyncHandler(userReviewPreview));
 //내가 진행중인 미션 목록 조회
 userRouter.get('/missions-chanllenge', asyncHandler(userMissionCompletePreview));
 
-//진행중인 미션 > 성공중인 미션 > 조회
+//진행중인 미션 > 진행완료 미션 > 조회
 userRouter.patch('/missions/:missionId/success', asyncHandler(missionSuccess));
