@@ -3,7 +3,7 @@ import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
 import {checkUserIdSql, checkUserMissionIdSql} from './user.sql.js'
-import {getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, confirmMissionSql, patchMissionSql, getResultStoreMissionSql, insertUserMission, getUserMissionByMissionIdAtFirstSql, getUserMissionByMissionIdSql} from './user.sql.js'
+import {getUserReviewByReviewIdAtFirstSql, getUerReviewByReviewIdSql, confirmMissionSql, getResultStoreMissionSql, insertUserMission, getUserMissionByMissionIdAtFirstSql, getUserMissionByMissionIdSql, patchUserMissionSuccessSql} from './user.sql.js'
 
 //4. 미션 도전
 //이미 진행중인 미션인지 확인
@@ -104,11 +104,11 @@ export const getCheckMissionUserId = async(userId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG)
     }
 }
-export const getUserMissionReview = async(cursorId, size, userId) => {
+export const getUserMissionPreview = async(cursorId, size, userId) => {
     try{
         const conn = await pool.getConnection();
 
-        if(cursorId == "undefinded" || typeof cursorId == "undefined" || cursorId == null){
+        if(cursorId == "undefined" || typeof cursorId == "undefined" || cursorId == null){
             const [missions] = await pool.query(getUserMissionByMissionIdAtFirstSql, [parseInt(userId), parseInt(size)]);
             conn.release();
             return missions;
@@ -119,5 +119,35 @@ export const getUserMissionReview = async(cursorId, size, userId) => {
         }
     }catch(err){
         throw new BaseError(status.PARAMETER_IS_WRONG)
+    }
+}
+
+//진행중인 미션 > 성공중인 미션 바꾸고 > 성공완료 조회
+export const patchUserMissionSuccess = async(userId, missionId, body) => {
+    try{
+        const conn = await pool.getConnection();
+        await pool.query(patchUserMissionSuccessSql, [body.complete, body.success, userId, missionId]);
+        conn.release();
+        return;
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
+    }
+}
+
+//진행완료인 미션 가져오기
+export const getUserMissionSuccess = async(cursorId, size, userId) => {
+    try{
+        const conn = await pool.getConnection();
+        if(cursorId == "undefined" || typeof cursorId == "undefined" || cursorId == null){
+            const [missions] = await pool.query(getUerMissionSuccessByMissionIdAtFirstSql, []);
+            conn.release();
+            return missions;
+        }else{
+            const [missions] = await pool.query(getUerMissionSuccessByMissionIdSql, []);
+            conn.release();
+            return missions;
+        }
+    }catch(err){
+        throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 }

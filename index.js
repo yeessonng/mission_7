@@ -11,6 +11,7 @@ import cors from 'cors';
 import { storesRouter } from './src/routes/stores.route.js'
 import { tempRouter } from './src/routes/temp.route.js';
 import { userRouter } from './src/routes/user.route.js';
+import {ownerRouter} from './src/routes/owner.route.js';
 
 dotenv.config();
 

@@ -2,7 +2,7 @@ import {response} from '../../config/response.js';
 import {status} from '../../config/response.status.js';
 
 import { getUserReview, getUserMissionComplete } from '../providers/user.provider.js';
-import { patchMission } from '../services/user.service.js';
+import { patchMission, patchMissionSuccess } from '../services/user.service.js';
 
 //4
 export const missionChallenge = async (req, res, next) => {
@@ -19,4 +19,9 @@ export const userReviewPreview = async (req, res, next) => {
 //내가 진행중인 미션 목록 조회
 export const userMissionCompletePreview = async (req, res, next) => {
     res.send(response(status.SUCCESS, await getUserMissionComplete(req.params.userId, req.query)));
+}
+
+//진행중인 미션 > 성공중인 미션 > 조회
+export const missionSuccess = async(req, res, next) => {
+    res.send(response(status.SUCCESS, await patchMissionSuccess(req.params.userId, req.params.missionId, req.body, req.query)));
 }

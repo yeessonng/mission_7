@@ -24,3 +24,6 @@ export const getUserMissionByMissionIdAtFirstSql = "SELECT mission.id, store.nam
 export const getUserMissionByMissionIdSql= "SELECT mission.id, store.name, mission.body, mission.term, mission.reward, user_mission.complete " +
 "FROM user_mission JOIN mission ON user_mission.mission_id = mission.id JOIN store ON mission.store_id = store.id " +
 "WHERE user_mission.user_id = ? AND user_mission.complete = '진행중' AND mission.id < ? ORDER BY mission.id DESC LIMIT ?;";
+
+//진행중인 미션 > 성공중인 미션 > 조회
+export const patchUserMissionSuccessSql = "UPDATE user_mission SET complete = ?, success = ? WHERE user_id = ? AND mission_id = ?;";

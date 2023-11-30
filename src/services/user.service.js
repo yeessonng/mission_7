@@ -2,8 +2,9 @@ import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
 import {patchMissionResponseDTO} from "../dtos/user.dto.js"
-import {confirmMission, getResultStoreMission, addUserMission} from "../models/user.dao.js"
+import {confirmMission, getResultStoreMission, addUserMission, getCheckMissionUserId, patchUserMissionSuccess, getUserMissionSuccess} from "../models/user.dao.js"
 
+import {previewUserMissionSuccessResponseDTO} from '../dtos/owner.dto.js';
 
 //4
 export const patchMission = async(userId, missionId, body) => {
@@ -27,4 +28,18 @@ export const patchMission = async(userId, missionId, body) => {
     //dto로 만들어서 controller로 리턴 > controller가 클라이언트에게 전송!
     return(patchMissionResponseDTO(result));
 
+}
+
+//진행중인 미션 > 성공중인 미션 > 조회
+export const patchMissionSuccess = async(userId, missionId, body, query) => {
+    //매핑 테이블에 해당 userId가 미션을 진행하고 있는가 검사
+    const confirm = await getCheckMissionUserId(parseInt(userId));
+    if(confirm == -1){
+        throw new BaseError(status.USER_NOT_MISSION_CHANLLENGE);
+    }
+
+    await patchUserMissionSuccess(parseInt(userId), parseInt(missionId), body);
+
+    const {cursorId, paging = 3} = query;
+    return previewUserMissionSuccessResponseDTO(await getUserMissionSuccess(cursorId, paging, userId));
 }

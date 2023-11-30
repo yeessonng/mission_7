@@ -1,7 +1,7 @@
 import {BaseError} from "../../config/error.js";
 import {status} from "../../config/response.status.js";
 
-import {getCheckUserId, getCheckMissionUserId, getUserPreviewReview, getUserMissionReview} from '../models/user.dao.js'
+import {getCheckUserId, getCheckMissionUserId, getUserPreviewReview, getUserMissionPreview} from '../models/user.dao.js'
 import {previewUserReviewResponseDTO, previewUserMissionCompleteResponseDTO} from '../dtos/user.dto.js'
 
 //사용자 리뷰 목록 조회
@@ -25,5 +25,5 @@ export const getUserMissionComplete = async(userId, query) => {
     }
 
     const {missionId, paging = 3} = query;
-    return previewUserMissionCompleteResponseDTO(await getUserMissionReview(missionId, paging, userId))
+    return previewUserMissionCompleteResponseDTO(await getUserMissionPreview(missionId, paging, userId))
 }
